@@ -1,0 +1,148 @@
+#include <iostream>
+using namespace std;
+
+/*
+    ЗАВДАННЯ 1
+    Знайти номер останнього стовпця,
+    що містить однакову кількість додатних
+    і від’ємних елементів (нулі не враховуються).
+*/
+
+void findLastColumn() {
+    int M, N;
+
+    do {
+        cout << "Введіть кількість рядків M (2-20): ";
+        cin >> M;
+    } while (M < 2 || M > 20);
+
+    do {
+        cout << "Введіть кількість стовпців N (2-20): ";
+        cin >> N;
+    } while (N < 2 || N > 20);
+
+    int matrix[21][21];
+
+    cout << "Введіть елементи матриці по рядках:\n";
+
+    for (int i = 1; i <= M; i++) {
+        for (int j = 1; j <= N; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+
+    int lastColumn = 0;
+
+    for (int j = 1; j <= N; j++) {
+        int positive = 0;
+        int negative = 0;
+
+        for (int i = 1; i <= M; i++) {
+            if (matrix[i][j] > 0)
+                positive++;
+            else if (matrix[i][j] < 0)
+                negative++;
+        }
+
+        if (positive == negative && positive != 0) {
+            lastColumn = j;
+        }
+    }
+
+    cout << "Номер останнього відповідного стовпця: "
+         << lastColumn << endl;
+}
+
+
+/*
+    ЗАВДАННЯ 2
+    Після стовпця з номером K
+    вставити стовпець з одиниць.
+*/
+
+void insertColumn() {
+    int M, N, K;
+
+    do {
+        cout << "Введіть кількість рядків M (2-20): ";
+        cin >> M;
+    } while (M < 2 || M > 20);
+
+    do {
+        cout << "Введіть кількість стовпців N (2-20): ";
+        cin >> N;
+    } while (N < 2 || N > 20);
+
+    int matrix[21][22]; // +1 стовпець для вставки
+
+    cout << "Введіть елементи матриці по рядках:\n";
+
+    for (int i = 1; i <= M; i++) {
+        for (int j = 1; j <= N; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+
+    do {
+        cout << "Введіть номер стовпця K (1-" << N << "): ";
+        cin >> K;
+    } while (K < 1 || K > N);
+
+    // Зсув вправо
+    for (int i = 1; i <= M; i++) {
+        for (int j = N + 1; j > K + 1; j--) {
+            matrix[i][j] = matrix[i][j - 1];
+        }
+        matrix[i][K + 1] = 1;
+    }
+
+    N++;
+
+    cout << "Матриця після вставки:\n";
+
+    for (int i = 1; i <= M; i++) {
+        for (int j = 1; j <= N; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+
+/*
+    Головна функція.
+    Організовано багаторазовий вибір завдання.
+*/
+
+int main() {
+
+    int choice;
+
+    do {
+        cout << "\n===== МЕНЮ =====\n";
+        cout << "1 - Завдання 1 (пошук стовпця)\n";
+        cout << "2 - Завдання 2 (вставка стовпця)\n";
+        cout << "0 - Вихід\n";
+        cout << "Ваш вибір: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                findLastColumn();
+                break;
+            case 2:
+                insertColumn();
+                break;
+            case 0:
+                cout << "Програма завершена.\n";
+                break;
+            default:
+                cout << "Невірний вибір!\n";
+        }
+
+    } while (choice != 0);
+
+    return 0;
+}
+
+
