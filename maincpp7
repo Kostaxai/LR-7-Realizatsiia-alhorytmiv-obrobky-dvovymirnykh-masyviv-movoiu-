@@ -2,12 +2,32 @@
 using namespace std;
 
 /*
-    ЗАВДАННЯ 1
-    Знайти номер останнього стовпця,
-    що містить однакову кількість додатних
-    і від’ємних елементів (нулі не враховуються).
+    Допоміжна функція введення матриці по рядках
 */
+void inputMatrix(int matrix[21][22], int M, int N) {
+    cout << "Введіть елементи матриці по рядках:\n";
+    for (int i = 1; i <= M; i++) {
+        for (int j = 1; j <= N; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+}
 
+/*
+    Допоміжна функція виведення матриці по рядках
+*/
+void outputMatrix(int matrix[21][22], int M, int N) {
+    for (int i = 1; i <= M; i++) {
+        for (int j = 1; j <= N; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+/*
+    ЗАВДАННЯ 1
+*/
 void findLastColumn() {
     int M, N;
 
@@ -21,15 +41,9 @@ void findLastColumn() {
         cin >> N;
     } while (N < 2 || N > 20);
 
-    int matrix[21][21];
+    int matrix[21][22];
 
-    cout << "Введіть елементи матриці по рядках:\n";
-
-    for (int i = 1; i <= M; i++) {
-        for (int j = 1; j <= N; j++) {
-            cin >> matrix[i][j];
-        }
-    }
+    inputMatrix(matrix, M, N);
 
     int lastColumn = 0;
 
@@ -53,13 +67,9 @@ void findLastColumn() {
          << lastColumn << endl;
 }
 
-
 /*
     ЗАВДАННЯ 2
-    Після стовпця з номером K
-    вставити стовпець з одиниць.
 */
-
 void insertColumn() {
     int M, N, K;
 
@@ -73,22 +83,16 @@ void insertColumn() {
         cin >> N;
     } while (N < 2 || N > 20);
 
-    int matrix[21][22]; // +1 стовпець для вставки
+    int matrix[21][22];
 
-    cout << "Введіть елементи матриці по рядках:\n";
-
-    for (int i = 1; i <= M; i++) {
-        for (int j = 1; j <= N; j++) {
-            cin >> matrix[i][j];
-        }
-    }
+    inputMatrix(matrix, M, N);
 
     do {
         cout << "Введіть номер стовпця K (1-" << N << "): ";
         cin >> K;
     } while (K < 1 || K > N);
 
-    // Зсув вправо
+    // Зсув вправо і вставка одиниць
     for (int i = 1; i <= M; i++) {
         for (int j = N + 1; j > K + 1; j--) {
             matrix[i][j] = matrix[i][j - 1];
@@ -99,21 +103,12 @@ void insertColumn() {
     N++;
 
     cout << "Матриця після вставки:\n";
-
-    for (int i = 1; i <= M; i++) {
-        for (int j = 1; j <= N; j++) {
-            cout << matrix[i][j] << " ";
-        }
-        cout << endl;
-    }
+    outputMatrix(matrix, M, N);
 }
 
-
 /*
-    Головна функція.
-    Організовано багаторазовий вибір завдання.
+    Головна функція з меню
 */
-
 int main() {
 
     int choice;
@@ -144,5 +139,3 @@ int main() {
 
     return 0;
 }
-
-
